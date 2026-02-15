@@ -54,3 +54,26 @@
 - `Hello` は「名前デフォルト設定 + `greetingPrefix` 呼び出し」の責務に分離。
 - `greetingPrefix` は `switch` + `default` で英語へフォールバック。
 - テストケース構成は v7 と同様（文言のみ一部調整）。
+
+## 文法レベルコメント（今回追記したファイル）
+
+### `hello-world/v7/hello.go`
+- `package main` は実行可能バイナリを作るパッケージ宣言。
+- `const` で文字列定数を宣言し、`:=` でローカル変数 `prefix` を宣言。
+- `if name == ""` で空文字判定し、`switch language` で分岐。
+- `return prefix + name` で文字列連結結果を返却。
+
+### `hello-world/v8/hello.go`
+- `Hello(name string, language string) string` は引数2つ、戻り値1つの関数シグネチャ。
+- `greetingPrefix(language string) (prefix string)` は名前付き戻り値。
+- `default` を持つ `switch` により、未対応言語を英語にフォールバック。
+- 裸の `return` は現在の `prefix` 値を返す。
+
+### `integers/v1/adder.go`
+- `func Add(x, y int) int` は同一型引数の省略記法（`x int, y int` と同義）。
+- `return x + y` は `int` 同士の加算式を返す。
+
+### `integers/v1/adder_test.go`
+- `TestAdder(t *testing.T)` は Go テストランナーが認識する関数形。
+- `:=` による型推論で `sum` / `expected` を定義。
+- `if sum != expected` で不一致を判定し、`t.Errorf` で失敗を報告。
